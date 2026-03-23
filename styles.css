@@ -1,0 +1,20 @@
+body {
+    background-color: #f5f7fa;
+}
+
+.hover-card {
+    transition: 0.3s;
+}
+
+.hover-card:hover {
+    transform: scale(1.03);
+}
+
+.card {
+    border-radius: 10px;
+}
+
+table {
+    border-radius: 10px;
+    overflow: hidden;
+}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Tasks</h2>
+
+<form method="GET" class="row mb-3">
+<div class="col">
+<select name="status" class="form-select">
+<option value="">All</option>
+<option>Pending</option>
+<option>Completed</option>
+</select>
+</div>
+
+<div class="col">
+<select name="category" class="form-select">
+<option value="">All</option>
+<option>Tax</option>
+<option>Legal</option>
+<option>Audit</option>
+</select>
+</div>
+
+<div class="col">
+<button class="btn btn-dark">Filter</button>
+</div>
+</form>
+
+<table class="table table-bordered">
+<tr>
+<th>Title</th>
+<th>Category</th>
+<th>Due</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+{% for t in tasks %}
+<tr class="{% if t['status']=='Pending' and t['due_date']<today|string %}table-danger{% endif %}">
+<td>{{ t['title'] }}</td>
+<td>{{ t['category'] }}</td>
+<td>{{ t['due_date'] }}</td>
+<td>{{ t['status'] }}</td>
+<td>
+<a href="/update_status/{{ t['id'] }}" class="btn btn-success btn-sm">Done</a>
+</td>
+</tr>
+{% endfor %}
+</table>
+
+<h4>Add Task</h4>
+
+<form method="POST" action="/add_task">
+<input type="hidden" name="client_id" value="{{ client_id }}">
+
+<input name="title" class="form-control mb-2" placeholder="Title">
+<select name="category" class="form-control mb-2">
+<option>Tax</option>
+<option>Legal</option>
+<option>Audit</option>
+</select>
+
+<input type="date" name="due_date" class="form-control mb-2">
+
+<button class="btn btn-primary">Add</button>
+</form>
+
+{% endblock %}

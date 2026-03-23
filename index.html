@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Clients</h2>
+
+<!-- Search & Sort Form -->
+<form method="GET" class="row mb-4">
+    <div class="col-md-6">
+        <input name="search" value="{{ search }}" class="form-control" placeholder="Search clients">
+    </div>
+
+    <div class="col-md-3">
+        <select name="sort" class="form-select">
+            <option value="">Sort</option>
+            <option value="asc" {% if sort=='asc' %}selected{% endif %}>A-Z</option>
+            <option value="desc" {% if sort=='desc' %}selected{% endif %}>Z-A</option>
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <button class="btn btn-dark w-100">Apply</button>
+    </div>
+</form>
+
+<!-- Clients List -->
+<div class="row">
+{% for c in clients %}
+    <div class="col-md-4">
+        <div class="card p-3 text-center mb-3 hover-card">
+            <i class="bi bi-building" style="font-size:40px;color:#6c63ff;"></i>
+            <h5 class="mt-2">{{ c['company_name'] }}</h5>
+            <p>{{ c['entity_type'] }} | {{ c['country'] }}</p>
+            <a href="{{ url_for('view_tasks', client_id=c['id']) }}" class="btn btn-primary btn-sm">View Tasks</a>
+        </div>
+    </div>
+{% else %}
+    <p class="text-center">No clients found.</p>
+{% endfor %}
+</div>
+
+{% endblock %}
